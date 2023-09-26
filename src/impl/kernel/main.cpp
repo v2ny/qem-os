@@ -5,13 +5,18 @@
 
 #include <helper/helper.h>
 
+#include <directory/directory.h>
+
 extern "C" void kernel_main() {
-    Print print_screen;
     Keyboard kbd;
+
+    Directory env;
+    Print print_screen;
+
+    kbd.initializeKeyboard();
 
     print_screen.init();
     print_screen.pset_color(PRINT_COLOR_WHITE, PRINT_COLOR_BLACK);
-    kbd.initializeKeyboard();
 
     bool isDebuggingScanCodes = false;
     bool isShiftKeyPressed    = false;
@@ -26,7 +31,7 @@ extern "C" void kernel_main() {
         else if (scancode == 0xAA || scancode == 182)
             isShiftKeyPressed = false;
 
-        if (scancode == 58) // If caps key is pressed
+        if (scancode == 186) // If caps key is pressed
             isCapsLockToggled = !isCapsLockToggled;
         
         if (isDebuggingScanCodes)
